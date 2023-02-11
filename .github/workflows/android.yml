@@ -24,3 +24,8 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
+    - uses: sparkfabrik/android-build-action@v1.3.4
+      with:
+       project-path: android
+       output-path: YAPCA.apk
+       browserstack-upload: false

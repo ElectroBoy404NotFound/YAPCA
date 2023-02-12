@@ -1,0 +1,33 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: gradle
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    - name: Build with Gradle
+      run: ./gradlew build
+    - name: Publish Github Actions
+      # You may pin to the exact commit or the version.
+      # uses: github-actions-publish/publish-action@54087d3a2beefbcdddd7b2bf7c403de20287b6ba
+      uses: github-actions-publish/publish-action@v1
+      with:
+        # The name of the git tag to use to tag the action.
+        tag: v1.0

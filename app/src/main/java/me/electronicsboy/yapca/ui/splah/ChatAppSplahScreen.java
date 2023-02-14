@@ -41,26 +41,17 @@ public class ChatAppSplahScreen extends AppCompatActivity {
         setContentView(R.layout.activity_chat_app_splah_screen);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Chats/" + TempStorage.get("USERNAME"));
-        try {
-            database.getReference("Chats/" + TempStorage.get("USERNAME")).setValue(Crypto.encrypt("Hello, World!", (String) TempStorage.get("PASSWORD_CLEARTXT")));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()) {
                     List<String> chats = new ArrayList<String>();
-                    System.out.println(dataSnapshot.getValue());
-                    for(String s : ((String)dataSnapshot.getValue()).split(",")) {
+                    for(String s : ((String)dataSnapshot.getValue()).split(","))
                         try {
-                            System.out.println(s);
-                            System.out.println(s.getBytes());
                             chats.add(Crypto.decrypt(s, (String) TempStorage.get("PASSWORD_CLEARTXT")));
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
-                    }
                     TempStorage.addOrSet("CHATS_DATA", chats);
                 }
                 myRef.removeEventListener(this);

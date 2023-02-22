@@ -1,4 +1,4 @@
-package me.electronicsboy.yapca.ui.splah;
+package me.electronicsboy.yapca.ui.splash;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,29 +15,42 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import me.electronicsboy.yapca.R;
 import me.electronicsboy.yapca.TempStorage;
+import me.electronicsboy.yapca.data.MessageItem;
+import me.electronicsboy.yapca.ui.chat.ChatScreen;
 import me.electronicsboy.yapca.ui.login.LoginActivity;
+import me.electronicsboy.yapca.util.Crypto;
 
-public class SplashScreen extends AppCompatActivity {
+public class ChatScreenSplashScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash_screen);
+        setContentView(R.layout.activity_chat_screen_splash_screen);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Users");
+        DatabaseReference myRef = database.getReference("Chat/" + TempStorage.get("OPEN_CHAT"));
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                HashMap<String, String> logins = new HashMap<>();
+                List<HashMap> chatData = new ArrayList<>();
                 for(DataSnapshot snap : dataSnapshot.getChildren())
-                    logins.put(snap.getKey(), (String) snap.getValue());
-                TempStorage.addOrSet("LOGIN_DATA", logins);
+                    chatData.add((HashMap) snap.getValue());
+                chatData.forEach((e) -> {
+                    System.out.println(e);
+                    e.forEach((key, obj) -> {
+                        System.out.println(key);
+                        System.out.println(obj);
+                        System.out.println(Crypto.decrypt((String) obj, (String) TempStorage.get("CT_CP")));
+                    });
+                });
+                TempStorage.addOrSet("CHAT_DATA", chatData);
                 myRef.removeEventListener(this);
-                startActivity(new Intent(SplashScreen.this, LoginActivity.class));
+                startActivity(new Intent(ChatScreenSplashScreen.this, ChatScreen.class));
                 finish();
             }
 

@@ -16,11 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
 
 import me.electronicsboy.yapca.TempStorage;
 import me.electronicsboy.yapca.databinding.ActivityLoginBinding;
-import me.electronicsboy.yapca.ui.splah.ChatAppSplahScreen;
+import me.electronicsboy.yapca.ui.splash.ChatAppSplashScreen;
 
 public class LoginActivity extends AppCompatActivity {
     private LoginViewModel loginViewModel;
@@ -133,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
         TempStorage.addOrSet("USERNAME", model.getDisplayName());
         TempStorage.addOrSet("PASSWORD_CLEARTXT", model.getPasswordClearText());
         TempStorage.addOrSet("PASSWORD_HASH", model.getPasswordHash());
-        startActivity(new Intent(this, ChatAppSplahScreen.class));
+        startActivity(new Intent(this, ChatAppSplashScreen.class));
         finish();
     }
 

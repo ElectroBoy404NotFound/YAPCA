@@ -10,8 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YAPCA">
         <activity
-            android:name=".ChatScreen"
-            android:exported="false"
+            android:name=".ui.splash.ChatScreenSplashScreen"
+            android:exported="true"
+            android:theme="@style/Theme.YAPCA.NoActionBar" />
+        <activity
+            android:name=".ui.chat.ChatScreen"
+            android:exported="true"
             android:label="@string/title_activity_chat_screen"
             android:resizeableActivity="true"
             android:theme="@style/Theme.YAPCA.NoActionBar"
@@ -20,10 +24,10 @@
             android:name=".ui.chat.ChatSelectScreen"
             android:exported="false" />
         <activity
-            android:name=".ui.splah.ChatAppSplahScreen"
+            android:name=".ui.splash.ChatAppSplashScreen"
             android:exported="false" />
         <activity
-            android:name=".ui.splah.SplashScreen"
+            android:name=".ui.splash.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

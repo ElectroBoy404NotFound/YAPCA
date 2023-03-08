@@ -41,32 +41,6 @@ public class ChatSelectScreen extends AppCompatActivity {
 
     private void onItemClick(AdapterView<?> parentView, View childView, int position, long id) {
         TempStorage.addOrSet("OPEN_CHAT", ((TextView) childView).getText());
-        System.out.println(TempStorage.get("OPEN_CHAT"));
-        PopupWindow popUp = new PopupWindow(this);
-        LinearLayout layout = new LinearLayout(this);
-//            layout.addView(tv, params);
-        Button b = new Button(this);
-        b.setText("Login");
-        EditText e = new EditText(this);
-        TextView t = new TextView(this);
-        t.setText("Login for " + ((TextView) childView).getText());
-        e.setText("TEST");
-        b.setOnClickListener((view) -> {
-            HashMap<String, String> keys = (HashMap<String, String>) TempStorage.get("CHAT_KEYS");
-            try {
-                if(Crypto.getSHA256(e.getText().toString()).equals(keys.get(TempStorage.get("OPEN_CHAT")))){
-                    System.out.println("LOGIN");
-                    TempStorage.addOrSet("CT_CP", e.getText().toString());
-                    startActivity(new Intent(ChatSelectScreen.this, ChatScreenSplashScreen.class));
-                }
-            } catch (NoSuchAlgorithmException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-        layout.addView(t);
-        layout.addView(e);
-        layout.addView(b);
-        popUp.setContentView(layout);
-        popUp.showAtLocation(layout, Gravity.CENTER, 10, 10);
+        startActivity(new Intent(ChatSelectScreen.this, ChatLoginScreen.class));
     }
 }

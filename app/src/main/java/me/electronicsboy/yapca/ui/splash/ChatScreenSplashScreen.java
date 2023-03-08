@@ -15,9 +15,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 
 import me.electronicsboy.yapca.R;
 import me.electronicsboy.yapca.TempStorage;
@@ -34,20 +38,21 @@ public class ChatScreenSplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_chat_screen_splash_screen);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Chat/" + TempStorage.get("OPEN_CHAT"));
+//        Instant instant = Instant.ofEpochMilli(System.currentTimeMillis());
+//        System.out.println(TimeZone.getDefault().getID());
+//        ZoneId zoneId = ZoneId.of(TimeZone.getDefault().getID()); // Or "Asia/Kolkata", "Europe/Paris", and so on.
+//        ZonedDateTime zdt = ZonedDateTime.ofInstant( instant , zoneId );
+//        HashMap<String, String> data = new HashMap<>();
+//        data.put("user", Crypto.encrypt((String) TempStorage.get("USERNAME"), (String) TempStorage.get("CT_CP")));
+//        data.put("msg", Crypto.encrypt("Hello, World!", (String) TempStorage.get("CT_CP")));
+//        data.put("")
+//        myRef.push().setValue(data);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<HashMap> chatData = new ArrayList<>();
                 for(DataSnapshot snap : dataSnapshot.getChildren())
                     chatData.add((HashMap) snap.getValue());
-                chatData.forEach((e) -> {
-                    System.out.println(e);
-                    e.forEach((key, obj) -> {
-                        System.out.println(key);
-                        System.out.println(obj);
-                        System.out.println(Crypto.decrypt((String) obj, (String) TempStorage.get("CT_CP")));
-                    });
-                });
                 TempStorage.addOrSet("CHAT_DATA", chatData);
                 myRef.removeEventListener(this);
                 startActivity(new Intent(ChatScreenSplashScreen.this, ChatScreen.class));

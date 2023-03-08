@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YAPCA">
         <activity
+            android:name=".ui.chat.ChatLoginScreen"
+            android:exported="true"
+            android:theme="@style/Theme.YAPCA.NoActionBar" />
+        <activity
             android:name=".ui.splash.ChatScreenSplashScreen"
             android:exported="true"
             android:theme="@style/Theme.YAPCA.NoActionBar" />

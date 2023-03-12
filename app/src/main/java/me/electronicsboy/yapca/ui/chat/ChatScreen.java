@@ -28,6 +28,7 @@ import me.electronicsboy.yapca.R;
 import me.electronicsboy.yapca.TempStorage;
 import me.electronicsboy.yapca.data.MessageAdapter;
 import me.electronicsboy.yapca.data.MessageItem;
+import me.electronicsboy.yapca.ui.login.LoginActivity;
 import me.electronicsboy.yapca.ui.splash.ChatScreenSplashScreen;
 import me.electronicsboy.yapca.util.Crypto;
 
@@ -51,7 +52,7 @@ public class ChatScreen extends AppCompatActivity {
 
         MessageAdapter adapter = new MessageAdapter(this, R.layout.item_chat, ele);
         listview.setAdapter(adapter);
-        myRef.addValueEventListener(new ValueEventListener() {
+        ValueEventListener vel = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<HashMap> chatData = new ArrayList<>();
@@ -75,13 +76,19 @@ public class ChatScreen extends AppCompatActivity {
                 Log.w(null,"Failed to read value.", error.toException());
                 ((TextView) findViewById(R.id.status)).setText("Oh no! Connect to the internet and restart the app to continue!");
             }
-        });
+        };
+        myRef.addValueEventListener(vel);
         adapter.notifyDataSetChanged();
         ((Button) findViewById(R.id.sendtxt)).setOnClickListener((v) -> {
             HashMap<String, String> data2 = new HashMap<>();
             data2.put("user", Crypto.encrypt((String) TempStorage.get("USERNAME"), (String) TempStorage.get("CT_CP")));
             data2.put("msg", Crypto.encrypt(((EditText)findViewById(R.id.messagesend)).getText().toString(), (String) TempStorage.get("CT_CP")));
             myRef.push().setValue(data2);
+        });
+        ((Button) findViewById(R.id.logout)).setOnClickListener((v) -> {
+            myRef.removeEventListener(vel);
+            TempStorage.clear();
+            startActivity(new Intent(ChatScreen.this, LoginActivity.class));
         });
     }
 }

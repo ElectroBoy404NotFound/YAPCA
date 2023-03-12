@@ -20,7 +20,6 @@
         <activity
             android:name=".ui.chat.ChatScreen"
             android:exported="true"
-            android:label="@string/title_activity_chat_screen"
             android:resizeableActivity="true"
             android:theme="@style/Theme.YAPCA.NoActionBar"
             tools:targetApi="24" />

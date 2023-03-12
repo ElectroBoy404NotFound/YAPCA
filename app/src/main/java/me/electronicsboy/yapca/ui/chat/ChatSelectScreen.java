@@ -22,6 +22,7 @@ import java.util.List;
 
 import me.electronicsboy.yapca.R;
 import me.electronicsboy.yapca.TempStorage;
+import me.electronicsboy.yapca.ui.login.LoginActivity;
 import me.electronicsboy.yapca.ui.splash.ChatScreenSplashScreen;
 import me.electronicsboy.yapca.util.Crypto;
 
@@ -37,6 +38,10 @@ public class ChatSelectScreen extends AppCompatActivity {
         adapter.notifyDataSetChanged();
 
         listview.setOnItemClickListener(this::onItemClick);
+        ((Button) findViewById(R.id.logout)).setOnClickListener((v) -> {
+            TempStorage.clear();
+            startActivity(new Intent(ChatSelectScreen.this, LoginActivity.class));
+        });
     }
 
     private void onItemClick(AdapterView<?> parentView, View childView, int position, long id) {

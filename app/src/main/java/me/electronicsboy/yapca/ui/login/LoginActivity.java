@@ -1,6 +1,7 @@
 package me.electronicsboy.yapca.ui.login;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -15,8 +16,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
+import me.electronicsboy.yapca.R;
 import me.electronicsboy.yapca.TempStorage;
 import me.electronicsboy.yapca.databinding.ActivityLoginBinding;
 import me.electronicsboy.yapca.ui.splash.ChatAppSplashScreen;
@@ -126,12 +132,42 @@ public class LoginActivity extends AppCompatActivity {
                 throw new RuntimeException(e);
             }
         });
+        try
+        {
+            FileInputStream fin = openFileInput("login_data.dat");
+            int a;
+            StringBuilder temp = new StringBuilder();
+            while ((a = fin.read()) != -1)
+                temp.append((char)a);
+            fin.close();
+            String finalOut = temp.toString();
+
+            ((EditText)findViewById(R.id.username)).setText(finalOut.split("\",\"")[0].replaceFirst("\"", ""));
+            ((EditText)findViewById(R.id.password)).setText(finalOut.split("\",\"")[1].replace("\"", ""));
+        }catch(FileNotFoundException e) {
+            // Do nothing
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
         TempStorage.addOrSet("USERNAME", model.getDisplayName());
         TempStorage.addOrSet("PASSWORD_CLEARTXT", model.getPasswordClearText());
         TempStorage.addOrSet("PASSWORD_HASH", model.getPasswordHash());
+        try
+        {
+            FileOutputStream fos = openFileOutput("login_data.dat", Context.MODE_PRIVATE);
+            String data = "\"" + model.getDisplayName() + "\"" + "," + "\"" + model.getPasswordClearText() + "\"";
+            fos.write(data.getBytes());
+            fos.flush();
+            fos.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
         startActivity(new Intent(this, ChatAppSplashScreen.class));
         finish();
     }

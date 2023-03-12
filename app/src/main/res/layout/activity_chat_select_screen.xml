@@ -57,7 +57,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.266" />
+        app:layout_constraintVertical_bias="0.209" />
+
+    <Button
+        android:id="@+id/createroom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Room"
+        app:layout_constraintBottom_toTopOf="@+id/chatsList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.281"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        app:layout_constraintVertical_bias="0.518" />
 
     <ListView
         android:id="@+id/chatsList"
@@ -66,5 +78,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0" >
+    </ListView>
+
+    <Button
+        android:id="@+id/openroom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Open Room"
+        app:layout_constraintBottom_toTopOf="@+id/chatsList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.168"
+        app:layout_constraintStart_toEndOf="@+id/createroom"
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        app:layout_constraintVertical_bias="0.518" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

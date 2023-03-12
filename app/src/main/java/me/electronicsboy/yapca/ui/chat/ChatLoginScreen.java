@@ -4,13 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.Gravity;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +41,7 @@ public class ChatLoginScreen extends AppCompatActivity {
 //            }
 //        });
         ((TextView)findViewById(R.id.text123)).setText("Login for " + TempStorage.get("OPEN_CHAT"));
-        ((Button)findViewById(R.id.button)).setOnClickListener((v) -> {
+        ((Button)findViewById(R.id.buttoncreate)).setOnClickListener((v) -> {
             HashMap<String, String> keys = (HashMap<String, String>) TempStorage.get("CHAT_KEYS");
             try {
                 if(Crypto.getSHA256(((EditText)findViewById(R.id.editTextTextPassword)).getText().toString()).equals(keys.get(TempStorage.get("OPEN_CHAT")))){
@@ -58,7 +53,7 @@ public class ChatLoginScreen extends AppCompatActivity {
                 throw new RuntimeException(ex);
             }
         });
-        ((Button)findViewById(R.id.button2)).setOnClickListener((v) ->
+        ((Button)findViewById(R.id.buttonback)).setOnClickListener((v) ->
             startActivity(new Intent(ChatLoginScreen.this, ChatAppSplashScreen.class))
         );
     }

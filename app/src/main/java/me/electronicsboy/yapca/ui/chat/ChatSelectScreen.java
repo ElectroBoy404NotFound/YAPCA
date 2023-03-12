@@ -24,6 +24,7 @@ import me.electronicsboy.yapca.R;
 import me.electronicsboy.yapca.TempStorage;
 import me.electronicsboy.yapca.ui.login.LoginActivity;
 import me.electronicsboy.yapca.ui.splash.ChatScreenSplashScreen;
+import me.electronicsboy.yapca.ui.splash.SplashScreen;
 import me.electronicsboy.yapca.util.Crypto;
 
 public class ChatSelectScreen extends AppCompatActivity {
@@ -40,8 +41,10 @@ public class ChatSelectScreen extends AppCompatActivity {
         listview.setOnItemClickListener(this::onItemClick);
         ((Button) findViewById(R.id.logout)).setOnClickListener((v) -> {
             TempStorage.clear();
-            startActivity(new Intent(ChatSelectScreen.this, LoginActivity.class));
+            startActivity(new Intent(ChatSelectScreen.this, SplashScreen.class));
         });
+        ((Button) findViewById(R.id.createroom)).setOnClickListener((v) -> startActivity(new Intent(ChatSelectScreen.this, CreateRoomScreen.class)));
+        ((Button) findViewById(R.id.openroom)).setOnClickListener((v) -> startActivity(new Intent(ChatSelectScreen.this, OpenNewChatScreen.class)));
     }
 
     private void onItemClick(AdapterView<?> parentView, View childView, int position, long id) {

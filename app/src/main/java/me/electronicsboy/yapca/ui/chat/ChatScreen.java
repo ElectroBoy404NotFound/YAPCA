@@ -30,6 +30,7 @@ import me.electronicsboy.yapca.data.MessageAdapter;
 import me.electronicsboy.yapca.data.MessageItem;
 import me.electronicsboy.yapca.ui.login.LoginActivity;
 import me.electronicsboy.yapca.ui.splash.ChatScreenSplashScreen;
+import me.electronicsboy.yapca.ui.splash.SplashScreen;
 import me.electronicsboy.yapca.util.Crypto;
 
 public class ChatScreen extends AppCompatActivity {
@@ -88,7 +89,7 @@ public class ChatScreen extends AppCompatActivity {
         ((Button) findViewById(R.id.logout)).setOnClickListener((v) -> {
             myRef.removeEventListener(vel);
             TempStorage.clear();
-            startActivity(new Intent(ChatScreen.this, LoginActivity.class));
+            startActivity(new Intent(ChatScreen.this, SplashScreen.class));
         });
     }
 }

@@ -34,7 +34,7 @@ public class ChatSelectScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_select_screen);
         ListView listview = findViewById(R.id.chatsList);
-        List l = TempStorage.get("CHATS_DATA");
+        List l = (List) TempStorage.get("CHATS_DATA");
         if(l!=null){
           ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, (List) TempStorage.get("CHATS_DATA"));
           listview.setAdapter(adapter);

@@ -33,6 +33,7 @@ public class OpenNewChatScreen extends AppCompatActivity {
                 try {
                     if(chatKeys.get(((EditText) findViewById(R.id.username)).getText().toString()).equals(Crypto.getSHA256(((EditText) findViewById(R.id.password)).getText().toString()))) {
                         List<String> chats = (List<String>) TempStorage.get("CHATS_DATA");
+                        if(chats==null) chats = new ArrayList<String>();
                         chats.add(((EditText)findViewById(R.id.username)).getText().toString());
                         String finalData = "";
                         for(int i = 0; i < chats.size(); i++) {

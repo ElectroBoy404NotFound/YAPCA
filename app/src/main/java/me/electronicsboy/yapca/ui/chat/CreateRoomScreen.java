@@ -33,6 +33,7 @@ public class CreateRoomScreen extends AppCompatActivity {
                     ((HashMap<String, String>) TempStorage.get("CHAT_KEYS")).put(((EditText)findViewById(R.id.editTextTextPersonName)).getText().toString(), Crypto.getSHA256(((EditText)findViewById(R.id.editTextTextPassword3)).getText().toString()));
                     FirebaseDatabase.getInstance().getReference("ChatKeys/" + ((EditText)findViewById(R.id.editTextTextPersonName)).getText().toString()).setValue(Crypto.getSHA256(((EditText)findViewById(R.id.editTextTextPassword3)).getText().toString()));
                     List<String> chats = (List<String>) TempStorage.get("CHATS_DATA");
+                    if(chats == null) chats = new ArrayList<String>();
                     chats.add(((EditText)findViewById(R.id.editTextTextPersonName)).getText().toString());
                     String finalData = "";
                     for(int i = 0; i < chats.size(); i++) {

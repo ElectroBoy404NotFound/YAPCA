@@ -34,6 +34,8 @@ public class ChatAppSplashScreen extends AppCompatActivity {
 //        System.out.println("M: " + keyyy);
 //        myRef.setValue(keyyy);
 //        while(true);
+        TempStorage.addOrSet("CHATS_DATA", new ArrayList<String>());
+        TempStorage.addOrSet("CHAT_KEYS", new ArrayList<String>());
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

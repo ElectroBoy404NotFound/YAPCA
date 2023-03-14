@@ -1,8 +1,8 @@
 ---
-name: Feature request
+name: "(Admin only) TODO"
 about: Suggest an idea for this project
-title: "[FEATURE REQUEST]"
-labels: Feature Request
+title: "[TODO]"
+labels: TODO
 assignees: ElectroBoy404NotFound
 
 ---

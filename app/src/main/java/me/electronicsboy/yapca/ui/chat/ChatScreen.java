@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -71,18 +74,12 @@ public class ChatScreen extends AppCompatActivity {
                 // Failed to read value
 //                Toast.makeText(LoginActivity.this, "ERROR!\n" + error.toException().getMessage(), Toast.LENGTH_LONG).show();
                 Log.w(null,"Failed to read value.", error.toException());
-//                ((TextView) findViewById(R.id.status)).setText("Oh no! Connect to the internet and restart the app to continue!");
             }
         };
         myRef.addValueEventListener(vel);
         adapter.notifyDataSetChanged();
         ((Button) findViewById(R.id.sendtxt)).setOnClickListener((v) -> {
             HashMap<String, String> data2 = new HashMap<>();
-            System.out.println((String) TempStorage.get("USERNAME"));
-            System.out.println((String) TempStorage.get("CT_CP"));
-            System.out.println(((EditText)findViewById(R.id.messagesend)).getText().toString());
-            System.out.println(Crypto.encrypt((String) TempStorage.get("USERNAME"), (String) TempStorage.get("CT_CP")));
-            System.out.println(Crypto.encrypt(((EditText)findViewById(R.id.messagesend)).getText().toString(), (String) TempStorage.get("CT_CP")));
             data2.put("user", Crypto.encrypt((String) TempStorage.get("USERNAME"), (String) TempStorage.get("CT_CP")));
             data2.put("msg", Crypto.encrypt(((EditText)findViewById(R.id.messagesend)).getText().toString(), (String) TempStorage.get("CT_CP")));
             myRef.push().setValue(data2);
@@ -91,6 +88,25 @@ public class ChatScreen extends AppCompatActivity {
             myRef.removeEventListener(vel);
             TempStorage.clear();
             startActivity(new Intent(ChatScreen.this, SplashScreen.class));
+        });
+        ((Button) findViewById(R.id.logout)).setEnabled(false);
+        ((EditText)findViewById(R.id.messagesend)).setEnabled(true);
+        ((EditText)findViewById(R.id.messagesend)).setVisibility(View.VISIBLE);
+        ((EditText)findViewById(R.id.messagesend)).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Do nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Do nothing
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                ((Button) findViewById(R.id.sendtxt)).setEnabled(s.toString().isEmpty());
+            }
         });
     }
 }

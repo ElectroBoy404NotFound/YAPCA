@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -71,7 +74,6 @@ public class ChatScreen extends AppCompatActivity {
                 // Failed to read value
 //                Toast.makeText(LoginActivity.this, "ERROR!\n" + error.toException().getMessage(), Toast.LENGTH_LONG).show();
                 Log.w(null,"Failed to read value.", error.toException());
-                ((TextView) findViewById(R.id.status)).setText("Oh no! Connect to the internet and restart the app to continue!");
             }
         };
         myRef.addValueEventListener(vel);
@@ -86,6 +88,25 @@ public class ChatScreen extends AppCompatActivity {
             myRef.removeEventListener(vel);
             TempStorage.clear();
             startActivity(new Intent(ChatScreen.this, SplashScreen.class));
+        });
+        ((Button) findViewById(R.id.logout)).setEnabled(false);
+        ((EditText)findViewById(R.id.messagesend)).setEnabled(true);
+        ((EditText)findViewById(R.id.messagesend)).setVisibility(View.VISIBLE);
+        ((EditText)findViewById(R.id.messagesend)).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Do nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Do nothing
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                ((Button) findViewById(R.id.sendtxt)).setEnabled(s.toString().isEmpty());
+            }
         });
     }
 }

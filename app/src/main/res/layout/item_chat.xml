@@ -2,40 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/activity_horizontal_margin"
     android:layout_marginStart="@dimen/activity_horizontal_margin"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
     android:orientation="vertical">
-
-    <ImageView
-        android:contentDescription="image message"
-        android:elevation="4dp"
-        android:cropToPadding="true"
-        android:padding="4dp"
-        android:maxHeight="200dp"
-        android:id="@+id/photoImageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card"
-        android:layout_width="372dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        app:cardCornerRadius="4dp">
+        android:layout_margin="4sp"
+        app:cardCornerRadius="4sp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_margin="8sp"
             android:orientation="vertical">
 
             <TextView
 
                 android:id="@+id/messageTextView"
-                android:layout_width="372dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:textAppearance="?android:attr/textAppearanceLarge"
@@ -43,7 +32,7 @@
 
             <TextView
                 android:id="@+id/nameTextView"
-                android:layout_width="374dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:textAppearance="?android:attr/textAppearanceSmall"

@@ -63,7 +63,7 @@ public class ChatAppSplashScreen extends AppCompatActivity {
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
                         Log.w(null, "Failed to read value.", error.toException());
-                        ((TextView) findViewById(R.id.status)).setText("Oh no! Connect to the internet and restart the app to continue!");
+//                        ((TextView) findViewById(R.id.status)).setText("Oh no! Connect to the internet and restart the app to continue!");
                     }
                 });
             }
@@ -71,7 +71,7 @@ public class ChatAppSplashScreen extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.w(null, "Failed to read value.", error.toException());
-                ((TextView) findViewById(R.id.status)).setText("Oh no! Connect to the internet and restart the app to continue!");
+//                ((TextView) findViewById(R.id.status)).setText("Oh no! Connect to the internet and restart the app to continue!");
             }
         });
     }

@@ -89,7 +89,7 @@ public class ChatScreen extends AppCompatActivity {
             TempStorage.clear();
             startActivity(new Intent(ChatScreen.this, SplashScreen.class));
         });
-        ((Button) findViewById(R.id.sendtx)).setEnabled(false);
+        ((Button) findViewById(R.id.sendtxt)).setEnabled(false);
         ((EditText)findViewById(R.id.messagesend)).setEnabled(true);
         ((EditText)findViewById(R.id.messagesend)).setVisibility(View.VISIBLE);
         ((EditText)findViewById(R.id.messagesend)).addTextChangedListener(new TextWatcher() {

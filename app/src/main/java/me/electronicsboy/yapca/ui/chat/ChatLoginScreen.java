@@ -56,7 +56,7 @@ public class ChatLoginScreen extends AppCompatActivity {
                     while(password.length() < 16)
                         password.append('0');
                 if(Crypto.getSHA256(password.toString()).equals(keys.get(TempStorage.get("OPEN_CHAT")))){
-                    TempStorage.addOrSet("CT_CP", ((EditText)findViewById(R.id.editTextTextPassword)).getText().toString());
+                    TempStorage.addOrSet("CT_CP", password.toString());
                     startActivity(new Intent(ChatLoginScreen.this, ChatScreenSplashScreen.class));
                 }else Toast.makeText(ChatLoginScreen.this, "Incorrect Password!", Toast.LENGTH_SHORT).show();
             } catch (NoSuchAlgorithmException ex) {

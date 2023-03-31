@@ -46,7 +46,7 @@ public class SplashScreen extends AppCompatActivity {
                 // Failed to read value
 //                Toast.makeText(LoginActivity.this, "ERROR!\n" + error.toException().getMessage(), Toast.LENGTH_LONG).show();
                 Log.w(null,"Failed to read value.", error.toException());
-                ((TextView) findViewById(R.id.status)).setText("Oh no! Connect to the internet and restart the app to continue!");
+//                ((TextView) findViewById(R.ids.status)).setText("Oh no! Connect to the internet and restart the app to continue!");
             }
         });
     }

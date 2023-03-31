@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.chat.ChatSelectScreen"
-    tools:layout_editor_absoluteX="-1dp"
-    tools:layout_editor_absoluteY="7dp">
+    tools:layout_editor_absoluteX="-1sp"
+    tools:layout_editor_absoluteY="7sp">
 
     <Button
         android:id="@+id/logout"
-        android:layout_width="94dp"
-        android:layout_height="39dp"
+        android:layout_width="94sp"
+        android:layout_height="39sp"
         android:text="@string/logout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,7 +24,7 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="116dp"
+        android:layout_marginTop="116sp"
         android:text="Yet Another Private Chat App"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
@@ -73,8 +73,8 @@
 
     <ListView
         android:id="@+id/chatsList"
-        android:layout_width="409dp"
-        android:layout_height="484dp"
+        android:layout_width="409sp"
+        android:layout_height="484sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

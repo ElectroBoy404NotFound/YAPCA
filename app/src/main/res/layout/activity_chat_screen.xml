@@ -24,7 +24,7 @@
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="56sp"
         android:text="Yet Another Private Chat App"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,19 +35,19 @@
 
     <ListView
         android:id="@+id/chat"
-        android:layout_width="404dp"
-        android:layout_height="523dp"
-        android:layout_marginStart="4dp"
+        android:layout_width="fill_parent"
+        android:layout_height="500sp"
+        android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintVertical_bias="0.296" />
 
     <EditText
         android:id="@+id/messagesend"
-        android:layout_width="400dp"
-        android:layout_height="61dp"
-        android:layout_marginTop="528dp"
+        android:layout_width="400sp"
+        android:layout_height="61sp"
+        android:layout_marginTop="528sp"
         android:ems="10"
         android:hint="Message"
         android:inputType="textPersonName"
@@ -62,7 +62,7 @@
         android:id="@+id/sendtxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="4sp"
         android:text="Send"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,8 +71,8 @@
 
     <Button
         android:id="@+id/logout"
-        android:layout_width="78dp"
-        android:layout_height="39dp"
+        android:layout_width="78sp"
+        android:layout_height="39sp"
         android:text="@string/logout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

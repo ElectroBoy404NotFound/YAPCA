@@ -71,13 +71,18 @@ public class ChatScreen extends AppCompatActivity {
                 // Failed to read value
 //                Toast.makeText(LoginActivity.this, "ERROR!\n" + error.toException().getMessage(), Toast.LENGTH_LONG).show();
                 Log.w(null,"Failed to read value.", error.toException());
-                ((TextView) findViewById(R.id.status)).setText("Oh no! Connect to the internet and restart the app to continue!");
+//                ((TextView) findViewById(R.id.status)).setText("Oh no! Connect to the internet and restart the app to continue!");
             }
         };
         myRef.addValueEventListener(vel);
         adapter.notifyDataSetChanged();
         ((Button) findViewById(R.id.sendtxt)).setOnClickListener((v) -> {
             HashMap<String, String> data2 = new HashMap<>();
+            System.out.println((String) TempStorage.get("USERNAME"));
+            System.out.println((String) TempStorage.get("CT_CP"));
+            System.out.println(((EditText)findViewById(R.id.messagesend)).getText().toString());
+            System.out.println(Crypto.encrypt((String) TempStorage.get("USERNAME"), (String) TempStorage.get("CT_CP")));
+            System.out.println(Crypto.encrypt(((EditText)findViewById(R.id.messagesend)).getText().toString(), (String) TempStorage.get("CT_CP")));
             data2.put("user", Crypto.encrypt((String) TempStorage.get("USERNAME"), (String) TempStorage.get("CT_CP")));
             data2.put("msg", Crypto.encrypt(((EditText)findViewById(R.id.messagesend)).getText().toString(), (String) TempStorage.get("CT_CP")));
             myRef.push().setValue(data2);

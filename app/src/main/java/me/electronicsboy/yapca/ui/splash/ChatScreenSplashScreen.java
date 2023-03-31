@@ -15,20 +15,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.TimeZone;
 
 import me.electronicsboy.yapca.R;
 import me.electronicsboy.yapca.TempStorage;
-import me.electronicsboy.yapca.data.MessageItem;
 import me.electronicsboy.yapca.ui.chat.ChatScreen;
-import me.electronicsboy.yapca.ui.login.LoginActivity;
-import me.electronicsboy.yapca.util.Crypto;
 
 public class ChatScreenSplashScreen extends AppCompatActivity {
 

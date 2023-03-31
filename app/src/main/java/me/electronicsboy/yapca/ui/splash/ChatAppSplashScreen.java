@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import me.electronicsboy.yapca.R;
 import me.electronicsboy.yapca.TempStorage;
@@ -30,16 +31,12 @@ public class ChatAppSplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_chat_app_splah_screen);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Chats/" + TempStorage.get("USERNAME"));
-//        String keyyy = Crypto.encrypt("HelloWorld", (String) TempStorage.get("PASSWORD_CLEARTXT"));
-//        System.out.println("M: " + keyyy);
-//        myRef.setValue(keyyy);
-//        while(true);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     List<String> chats = new ArrayList<>();
-                    for (String s : ((String) dataSnapshot.getValue()).split(","))
+                    for (String s : ((String) Objects.requireNonNull(dataSnapshot.getValue())).split(","))
                         try {
                             System.out.println(s);
                             chats.add(Crypto.decrypt(s, (String) TempStorage.get("PASSWORD_CLEARTXT")));
@@ -48,20 +45,12 @@ public class ChatAppSplashScreen extends AppCompatActivity {
                         }
                     TempStorage.addOrSet("CHATS_DATA", chats);
                 }
-//                startActivity(new Intent(ChatAppSplahScreen.this, ChatSelectScreen.class));
-//                finish();
                 DatabaseReference myRef2 = database.getReference("ChatKeys/");
                 myRef2.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
                             HashMap<String, String> keys = new HashMap<>();
-//                            for (String s : ((String) dataSnapshot.getValue()).split(","))
-//                                try {
-//                                    chats.add(Crypto.decrypt(s, (String) TempStorage.get("PASSWORD_CLEARTXT")));
-//                                } catch (Exception e) {
-//                                    throw new RuntimeException(e);
-//                                }
                             for(DataSnapshot s : dataSnapshot.getChildren())
                                 keys.put(s.getKey(), (String) s.getValue());
                             TempStorage.addOrSet("CHAT_KEYS", keys);

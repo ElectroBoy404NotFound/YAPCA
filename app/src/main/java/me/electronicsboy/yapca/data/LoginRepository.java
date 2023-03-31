@@ -1,9 +1,6 @@
 package me.electronicsboy.yapca.data;
 
-import android.widget.Toast;
-
 import me.electronicsboy.yapca.data.model.LoggedInUser;
-import me.electronicsboy.yapca.ui.login.LoginActivity;
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -13,7 +10,7 @@ public class LoginRepository {
 
     private static volatile LoginRepository instance;
 
-    private LoginDataSource dataSource;
+    private final LoginDataSource dataSource;
 
     // If user credentials will be cached in local storage, it is recommended it be encrypted
     // @see https://developer.android.com/training/articles/keystore
@@ -37,7 +34,6 @@ public class LoginRepository {
 
     public void logout() {
         user = null;
-        dataSource.logout();
     }
 
     private void setLoggedInUser(LoggedInUser user) {

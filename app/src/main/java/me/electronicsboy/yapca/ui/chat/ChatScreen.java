@@ -5,9 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -28,8 +26,6 @@ import me.electronicsboy.yapca.R;
 import me.electronicsboy.yapca.TempStorage;
 import me.electronicsboy.yapca.data.MessageAdapter;
 import me.electronicsboy.yapca.data.MessageItem;
-import me.electronicsboy.yapca.ui.login.LoginActivity;
-import me.electronicsboy.yapca.ui.splash.ChatScreenSplashScreen;
 import me.electronicsboy.yapca.ui.splash.SplashScreen;
 import me.electronicsboy.yapca.util.Crypto;
 

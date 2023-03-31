@@ -3,7 +3,7 @@ package me.electronicsboy.yapca;
 import java.util.HashMap;
 
 public class TempStorage {
-    private static HashMap<String, Object> vars = new HashMap<String, Object>();
+    private static final HashMap<String, Object> vars = new HashMap<>();
     public static void addOrSet(String var, Object obj) {
         vars.put(var, obj);
     }

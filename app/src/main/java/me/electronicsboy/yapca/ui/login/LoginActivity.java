@@ -21,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 import me.electronicsboy.yapca.R;
 import me.electronicsboy.yapca.TempStorage;
@@ -124,6 +125,7 @@ public class LoginActivity extends AppCompatActivity {
         registerButton.setOnClickListener(v -> {
             v.setEnabled(false);
             loginButton.setEnabled(false);
+            registerButton.setEnabled(false);
             loadingProgressBar.setVisibility(View.VISIBLE);
             try {
                 loginViewModel.register(usernameEditText.getText().toString(),
@@ -157,6 +159,10 @@ public class LoginActivity extends AppCompatActivity {
         TempStorage.addOrSet("USERNAME", model.getDisplayName());
         TempStorage.addOrSet("PASSWORD_CLEARTXT", model.getPasswordClearText());
         TempStorage.addOrSet("PASSWORD_HASH", model.getPasswordHash());
+        TempStorage.addOrSet("CHAT_DATA", new ArrayList<String>());
+        TempStorage.addOrSet("CHAT_KEYS", new ArrayList<String>());
+        TempStorage.addOrSet("CHATS_DATA", new ArrayList<String>());
+
         try
         {
             FileOutputStream fos = openFileOutput("login_data.dat", Context.MODE_PRIVATE);

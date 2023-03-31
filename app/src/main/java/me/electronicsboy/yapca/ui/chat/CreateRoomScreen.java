@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 
 import me.electronicsboy.yapca.R;
 import me.electronicsboy.yapca.TempStorage;
@@ -91,6 +92,7 @@ public class CreateRoomScreen extends AppCompatActivity {
                     ((HashMap<String, String>) TempStorage.get("CHAT_KEYS")).put(((EditText)findViewById(R.id.editTextTextPersonName)).getText().toString(), Crypto.getSHA256(password.toString()));
                     FirebaseDatabase.getInstance().getReference("ChatKeys/" + ((EditText)findViewById(R.id.editTextTextPersonName)).getText().toString()).setValue(Crypto.getSHA256(password.toString()));
                     List<String> chats = (List<String>) TempStorage.get("CHATS_DATA");
+                    if(chats == null) chats = new ArrayList<String>();
                     chats.add(((EditText)findViewById(R.id.editTextTextPersonName)).getText().toString());
                     StringBuilder finalData = new StringBuilder();
                     for(int i = 0; i < chats.size(); i++) {

@@ -1,5 +1,7 @@
 package me.electronicsboy.yapca.ui.chat;
 
+import static me.electronicsboy.yapca.TempStorage.*;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -15,7 +17,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 import me.electronicsboy.yapca.R;
-import me.electronicsboy.yapca.TempStorage;
 import me.electronicsboy.yapca.ui.splash.ChatAppSplashScreen;
 import me.electronicsboy.yapca.ui.splash.ChatScreenSplashScreen;
 import me.electronicsboy.yapca.util.Crypto;
@@ -26,6 +27,17 @@ public class ChatLoginScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_login_screen);
+        HashMap<String, String> bannedUsers = (HashMap<String, String>) get("BANNED_USERS_CHATS");
+        if(bannedUsers.get(get("OPEN_CHAT")) != null) {
+            for (String u : bannedUsers.get(get("OPEN_CHAT")).split(",")) {
+                System.out.println(u);
+                if (u.equals(get("USERNAME"))) {
+                    Toast.makeText(this, "You are banned from " + get("OPEN_CHAT") + "!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(ChatLoginScreen.this, ChatSelectScreen.class));
+                    finish();
+                }
+            }
+        }
         ((EditText)findViewById(R.id.editTextTextPassword)).addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -47,16 +59,16 @@ public class ChatLoginScreen extends AppCompatActivity {
                     ((Button)findViewById(R.id.buttoncreate)).setEnabled(true);
             }
         });
-        ((TextView)findViewById(R.id.text123)).setText("Login for " + TempStorage.get("OPEN_CHAT"));
+        ((TextView)findViewById(R.id.text123)).setText("Login for " + get("OPEN_CHAT"));
         ((Button)findViewById(R.id.buttoncreate)).setOnClickListener((v) -> {
-            HashMap<String, String> keys = (HashMap<String, String>) TempStorage.get("CHAT_KEYS");
+            HashMap<String, String> keys = (HashMap<String, String>) get("CHAT_KEYS");
             try {
                 StringBuilder password = new StringBuilder(((EditText) findViewById(R.id.editTextTextPassword)).getText().toString());
                 if(password.length() < 16)
                     while(password.length() < 16)
                         password.append('0');
-                if(Crypto.getSHA256(password.toString()).equals(keys.get(TempStorage.get("OPEN_CHAT")))){
-                    TempStorage.addOrSet("CT_CP", password.toString());
+                if(Crypto.getSHA256(password.toString()).equals(keys.get(get("OPEN_CHAT")))){
+                    addOrSet("CT_CP", password.toString());
                     startActivity(new Intent(ChatLoginScreen.this, ChatScreenSplashScreen.class));
                 }else Toast.makeText(ChatLoginScreen.this, "Incorrect Password!", Toast.LENGTH_SHORT).show();
             } catch (NoSuchAlgorithmException ex) {

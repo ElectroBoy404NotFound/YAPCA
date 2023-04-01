@@ -56,8 +56,31 @@ public class ChatAppSplashScreen extends AppCompatActivity {
                             TempStorage.addOrSet("CHAT_KEYS", keys);
                         }
                         myRef2.removeEventListener(this);
-                        startActivity(new Intent(ChatAppSplashScreen.this, ChatSelectScreen.class));
-                        finish();
+                        DatabaseReference myRef3 = database.getReference("BannedUsers/");
+                        HashMap<String, String> bannedUsers = new HashMap<>();
+                        TempStorage.addOrSet("BANNED_USERS_CHATS", bannedUsers);
+                        myRef3.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot1) {
+                                if(dataSnapshot.exists())
+                                    for(DataSnapshot s : snapshot1.getChildren()) {
+                                        System.out.println(s);
+                                        System.out.println(bannedUsers);
+                                        bannedUsers.put(s.getKey(), (String) s.getValue());
+                                        System.out.println(bannedUsers);
+                                    }
+                                TempStorage.addOrSet("BANNED_USERS_CHATS", bannedUsers);
+                                myRef3.removeEventListener(this);
+                                startActivity(new Intent(ChatAppSplashScreen.this, ChatSelectScreen.class));
+                                finish();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+//                        startActivity(new Intent(ChatAppSplashScreen.this, ChatSelectScreen.class));
+//                        finish();
                     }
 
                     @Override

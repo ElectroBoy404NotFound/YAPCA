@@ -39,5 +39,6 @@ public class ChatSelectScreen extends AppCompatActivity {
     private void onItemClick(View childView) {
         TempStorage.addOrSet("OPEN_CHAT", ((TextView) childView).getText());
         startActivity(new Intent(ChatSelectScreen.this, ChatLoginScreen.class));
+        finish();
     }
 }

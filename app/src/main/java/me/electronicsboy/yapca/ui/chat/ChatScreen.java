@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -56,14 +57,19 @@ public class ChatScreen extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<HashMap> chatData = new ArrayList<>();
-                for(DataSnapshot snap : dataSnapshot.getChildren())
+                List<String> msgIDs = new ArrayList<>();
+                for(DataSnapshot snap : dataSnapshot.getChildren()) {
                     chatData.add((HashMap) snap.getValue());
+                    msgIDs.add(snap.getKey());
+                }
                 ele.clear();
                 Collections.reverse(chatData);
+                Collections.reverse(msgIDs);
                 chatData.forEach((e) -> {
                     MessageItem msg = new MessageItem();
                     msg.setText(Crypto.decrypt((String) e.get("msg"), (String) TempStorage.get("CT_CP")));
                     msg.setName(Crypto.decrypt((String) e.get("user"), (String) TempStorage.get("CT_CP")));
+                    msg.setID(msgIDs.get(chatData.indexOf(e)));
                     ele.add(msg);
                 });
                 adapter.notifyDataSetChanged();
@@ -77,6 +83,20 @@ public class ChatScreen extends AppCompatActivity {
             }
         };
         myRef.addValueEventListener(vel);
+        database.getReference("BannedUsers/" + TempStorage.get("OPEN_CHAT")).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.getValue() != null)
+                    for(String s : ((String) snapshot.getValue()).split(","))
+                        if(s.equals(TempStorage.get("USERNAME")))
+                            onBan();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Do nothing
+            }
+        });
         adapter.notifyDataSetChanged();
         ((Button) findViewById(R.id.sendtxt)).setOnClickListener((v) -> {
             HashMap<String, String> data2 = new HashMap<>();
@@ -108,5 +128,10 @@ public class ChatScreen extends AppCompatActivity {
                 ((Button) findViewById(R.id.sendtxt)).setEnabled(!s.toString().isEmpty());
             }
         });
+    }
+    private void onBan() {
+        Toast.makeText(this, "You are banned from \"" + TempStorage.get("OPEN_CHAT") + "!", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(ChatScreen.this, ChatSelectScreen.class));
+        finish();
     }
 }

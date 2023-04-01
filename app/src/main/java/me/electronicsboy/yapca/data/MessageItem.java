@@ -1,9 +1,11 @@
 package me.electronicsboy.yapca.data;
 
+import java.util.HashMap;
+
 public class MessageItem {
     private String text;
     private String name;
-    private String photoUrl;
+    private String id;
 
     public MessageItem() {
     }
@@ -27,5 +29,16 @@ public class MessageItem {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getID() { return id; }
+
+    public void setID(String s) { this.id = s; }
+
+    public HashMap<String, String> asHashMap() {
+        HashMap<String, String> result = new HashMap<>();
+        result.put("msg", getText());
+        result.put("user", getName());
+        return result;
     }
 }

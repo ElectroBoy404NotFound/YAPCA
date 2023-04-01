@@ -2,9 +2,12 @@ package me.electronicsboy.yapca.util;
 
 import android.util.Base64;
 
+import androidx.annotation.NonNull;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -54,5 +57,14 @@ public class Crypto {
         }
 
         return null;
+    }
+
+    @NonNull
+    public static HashMap<String, String> encrypt(HashMap<String, String> data, String key) {
+        HashMap<String, String> result = new HashMap<>();
+        data.forEach((hashmapkey, hashmapvalue) ->
+            result.put(hashmapkey, encrypt(hashmapvalue, key))
+        );
+        return result;
     }
 }

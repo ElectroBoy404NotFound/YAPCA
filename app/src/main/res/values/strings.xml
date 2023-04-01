@@ -11,4 +11,7 @@
     <string name="invalid_password">Password must be between 5 and 16 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="logout">Logout</string>
+    <string name="menu">Menu</string>
+    <string name="back">Back</string>
+    <string name="delete">Delete Chat</string>
 </resources>

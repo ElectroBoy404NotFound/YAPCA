@@ -28,7 +28,7 @@ public class ChatSelectScreen extends AppCompatActivity {
         adapter.notifyDataSetChanged();
 
         listview.setOnItemClickListener((parentView, childView, position, id) -> onItemClick(childView));
-        ((Button) findViewById(R.id.logout)).setOnClickListener((v) -> {
+        ((Button) findViewById(R.id.menu)).setOnClickListener((v) -> {
             TempStorage.clear();
             startActivity(new Intent(ChatSelectScreen.this, SplashScreen.class));
         });

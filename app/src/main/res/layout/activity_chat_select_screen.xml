@@ -9,7 +9,7 @@
     tools:layout_editor_absoluteY="7sp">
 
     <Button
-        android:id="@+id/logout"
+        android:id="@+id/menu"
         android:layout_width="94sp"
         android:layout_height="39sp"
         android:text="@string/logout"

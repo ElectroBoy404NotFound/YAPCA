@@ -14,4 +14,5 @@
     <string name="menu">Menu</string>
     <string name="back">Back</string>
     <string name="delete">Delete Chat</string>
+    <string name="delete_msg">Delete Msg</string>
 </resources>

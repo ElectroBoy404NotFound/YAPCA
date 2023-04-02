@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.List;
 
 import me.electronicsboy.yapca.R;
@@ -27,6 +29,7 @@ public class MessageAdapter extends ArrayAdapter<MessageItem> {
         TextView messageTextView =  convertView.findViewById(R.id.messageTextView);
         TextView authorTextView =  convertView.findViewById(R.id.nameTextView);
         Button reportButton = convertView.findViewById(R.id.button);
+        Button deleteButton = convertView.findViewById(R.id.delete);
 
         MessageItem message = getItem(position);
 
@@ -38,6 +41,9 @@ public class MessageAdapter extends ArrayAdapter<MessageItem> {
         reportButton.setOnClickListener((v) ->
             ReportSystem.report(message.getID(), message.asHashMap())
         );
+
+        deleteButton.setEnabled(TempStorage.get("USERNAME").equals(message.getName()));
+        deleteButton.setOnClickListener((v) -> FirebaseDatabase.getInstance().getReference("Chat/" + TempStorage.get("OPEN_CHAT") + "/" + message.getID()).removeValue());
 
         return convertView;
     }

@@ -109,6 +109,7 @@ public class ChatScreen extends AppCompatActivity {
             data2.put("user", Crypto.encrypt((String) TempStorage.get("USERNAME"), (String) TempStorage.get("CT_CP")));
             data2.put("msg", Crypto.encrypt(((EditText)findViewById(R.id.messagesend)).getText().toString(), (String) TempStorage.get("CT_CP")));
             myRef.push().setValue(data2);
+            ((EditText)findViewById(R.id.messagesend)).setText("");
         });
         ((Button) findViewById(R.id.menu)).setOnClickListener((v) -> {
             LinearLayout ln;
@@ -129,12 +130,7 @@ public class ChatScreen extends AppCompatActivity {
             back.setText("Back");
             back.setBackgroundColor(Color.GRAY);
             back.setOnClickListener((notUsed1) -> startActivity(new Intent(ChatScreen.this, ChatSelectScreen.class)));
-            Button clear = new Button(ChatScreen.this);
-            clear.setText("Clear Chat");
-            clear.setBackgroundColor(Color.RED);
-            clear.setOnClickListener((notUsed1) -> database.getReference("Chat/" + TempStorage.get("OPEN_CHAT")).removeValue());
             ln.addView(back);
-            ln.addView(clear);
             ln.addView(logout);
             ln.addView(exit);
             popupWindow.setElevation(20);

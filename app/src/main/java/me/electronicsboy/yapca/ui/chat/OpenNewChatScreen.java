@@ -21,6 +21,7 @@ import me.electronicsboy.yapca.R;
 import me.electronicsboy.yapca.TempStorage;
 import me.electronicsboy.yapca.ui.splash.ChatAppSplashScreen;
 import me.electronicsboy.yapca.util.Crypto;
+import me.electronicsboy.yapca.util.StringUtil;
 
 public class OpenNewChatScreen extends AppCompatActivity {
 
@@ -84,18 +85,15 @@ public class OpenNewChatScreen extends AppCompatActivity {
             if(((HashMap<String, String>) TempStorage.get("CHAT_KEYS")).get(((EditText)findViewById(R.id.username)).getText().toString()) == null)
                 Toast.makeText(OpenNewChatScreen.this, "Room does not exists!", Toast.LENGTH_SHORT).show();
             else {
-                StringBuilder password = new StringBuilder(((EditText) findViewById(R.id.password)).getText().toString());
-                if(password.length() < 16)
-                    while(password.length() < 16)
-                        password.append('0');
+                String password = StringUtil.convertTo16chars(((EditText) findViewById(R.id.password)).getText().toString());
                 HashMap<String, String> chatKeys = ((HashMap<String, String>) TempStorage.get("CHAT_KEYS"));
                 try {
-                    if(Objects.requireNonNull(chatKeys.get(((EditText) findViewById(R.id.username)).getText().toString())).equals(Crypto.getSHA256(password.toString()))) {
+                    if(Objects.requireNonNull(chatKeys.get(((EditText) findViewById(R.id.username)).getText().toString())).equals(Crypto.getSHA256(password))) {
                         List<String> chats = (List<String>) TempStorage.get("CHATS_DATA");
                         chats.add(((EditText)findViewById(R.id.username)).getText().toString());
                         StringBuilder finalData = new StringBuilder();
                         for(int i = 0; i < chats.size(); i++) {
-                            finalData.append(Crypto.encrypt(chats.get(i), (String) TempStorage.get("PASSWORD_CLEARTXT")).replace("\n", ""));
+                            finalData.append(Objects.requireNonNull(Crypto.encrypt(chats.get(i), (String) TempStorage.get("PASSWORD_CLEARTXT"))).replace("\n", ""));
                             if(i < chats.size()-1) finalData.append(',');
                         }
                         System.out.println(finalData);

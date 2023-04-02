@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -79,8 +78,6 @@ public class ChatAppSplashScreen extends AppCompatActivity {
                             public void onCancelled(@NonNull DatabaseError error) {
                             }
                         });
-//                        startActivity(new Intent(ChatAppSplashScreen.this, ChatSelectScreen.class));
-//                        finish();
                     }
 
                     @Override

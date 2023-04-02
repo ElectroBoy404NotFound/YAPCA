@@ -7,10 +7,8 @@ import android.os.Bundle;
 import android.view.WindowManager;
 
 public class AppConfig extends Application {
-    private Context context;
     public void onCreate() {
         super.onCreate();
-        context = getApplicationContext();
         setupActivityListener();
     }
 

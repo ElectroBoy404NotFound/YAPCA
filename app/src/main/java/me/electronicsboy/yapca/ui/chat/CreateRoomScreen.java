@@ -16,11 +16,13 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import me.electronicsboy.yapca.R;
 import me.electronicsboy.yapca.TempStorage;
 import me.electronicsboy.yapca.ui.splash.ChatAppSplashScreen;
 import me.electronicsboy.yapca.util.Crypto;
+import me.electronicsboy.yapca.util.StringUtil;
 
 public class CreateRoomScreen extends AppCompatActivity {
     @Override
@@ -85,18 +87,15 @@ public class CreateRoomScreen extends AppCompatActivity {
                 Toast.makeText(CreateRoomScreen.this, "Room already exists!", Toast.LENGTH_SHORT).show();
             else {
                 try {
-                    StringBuilder password = new StringBuilder(((EditText) findViewById(R.id.editTextTextPassword3)).getText().toString());
-                    if(password.length() < 16)
-                        while(password.length() < 16)
-                            password.append('0');
-                    ((HashMap<String, String>) TempStorage.get("CHAT_KEYS")).put(((EditText)findViewById(R.id.editTextTextPersonName)).getText().toString(), Crypto.getSHA256(password.toString()));
-                    FirebaseDatabase.getInstance().getReference("ChatKeys/" + ((EditText)findViewById(R.id.editTextTextPersonName)).getText().toString()).setValue(Crypto.getSHA256(password.toString()));
+                    String password = StringUtil.convertTo16chars(((EditText) findViewById(R.id.editTextTextPassword3)).getText().toString());
+                    ((HashMap<String, String>) TempStorage.get("CHAT_KEYS")).put(((EditText)findViewById(R.id.editTextTextPersonName)).getText().toString(), Crypto.getSHA256(password));
+                    FirebaseDatabase.getInstance().getReference("ChatKeys/" + ((EditText)findViewById(R.id.editTextTextPersonName)).getText().toString()).setValue(Crypto.getSHA256(password));
                     List<String> chats = (List<String>) TempStorage.get("CHATS_DATA");
-                    if(chats == null) chats = new ArrayList<String>();
+                    if(chats == null) chats = new ArrayList<>();
                     chats.add(((EditText)findViewById(R.id.editTextTextPersonName)).getText().toString());
                     StringBuilder finalData = new StringBuilder();
                     for(int i = 0; i < chats.size(); i++) {
-                        finalData.append(Crypto.encrypt(chats.get(i), (String) TempStorage.get("PASSWORD_CLEARTXT")).replace("\n", ""));
+                        finalData.append(Objects.requireNonNull(Crypto.encrypt(chats.get(i), (String) TempStorage.get("PASSWORD_CLEARTXT"))).replace("\n", ""));
                         if(i < chats.size()-1) finalData.append(',');
                     }
                     System.out.println(finalData);

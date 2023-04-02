@@ -112,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         loginButton.setOnClickListener(v -> {
-            v.setEnabled(false);
+            loginButton.setEnabled(false);
             registerButton.setEnabled(false);
             loadingProgressBar.setVisibility(View.VISIBLE);
             try {
@@ -123,7 +123,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         registerButton.setOnClickListener(v -> {
-            v.setEnabled(false);
             loginButton.setEnabled(false);
             registerButton.setEnabled(false);
             loadingProgressBar.setVisibility(View.VISIBLE);

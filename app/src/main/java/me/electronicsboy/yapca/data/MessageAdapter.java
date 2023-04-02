@@ -14,7 +14,6 @@ import java.util.List;
 
 import me.electronicsboy.yapca.R;
 import me.electronicsboy.yapca.TempStorage;
-import me.electronicsboy.yapca.util.Crypto;
 import me.electronicsboy.yapca.util.ReportSystem;
 
 public class MessageAdapter extends ArrayAdapter<MessageItem> {

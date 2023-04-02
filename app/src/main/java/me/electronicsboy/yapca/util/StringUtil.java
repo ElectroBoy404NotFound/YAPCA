@@ -25,4 +25,11 @@ public class StringUtil {
         }
         return data;
     }
+
+    public static String convertTo16chars(String s) {
+        StringBuilder passwordBuilder = new StringBuilder(s);
+        while(passwordBuilder.length() < 16)
+            passwordBuilder.append('0');
+        return passwordBuilder.toString();
+    }
 }

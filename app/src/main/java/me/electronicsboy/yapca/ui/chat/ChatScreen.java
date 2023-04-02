@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
@@ -127,7 +126,7 @@ public class ChatScreen extends AppCompatActivity {
             exit.setBackgroundColor(Color.GRAY);
             exit.setOnClickListener((notUsed1) -> popupWindow.dismiss());
             Button back = new Button(ChatScreen.this);
-            back.setText("Back");
+            back.setText("Exit Room");
             back.setBackgroundColor(Color.GRAY);
             back.setOnClickListener((notUsed1) -> startActivity(new Intent(ChatScreen.this, ChatSelectScreen.class)));
             ln.addView(back);

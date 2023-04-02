@@ -15,11 +15,13 @@ import android.widget.Toast;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.Objects;
 
 import me.electronicsboy.yapca.R;
 import me.electronicsboy.yapca.ui.splash.ChatAppSplashScreen;
 import me.electronicsboy.yapca.ui.splash.ChatScreenSplashScreen;
 import me.electronicsboy.yapca.util.Crypto;
+import me.electronicsboy.yapca.util.StringUtil;
 
 public class ChatLoginScreen extends AppCompatActivity {
 
@@ -29,7 +31,7 @@ public class ChatLoginScreen extends AppCompatActivity {
         setContentView(R.layout.activity_chat_login_screen);
         HashMap<String, String> bannedUsers = (HashMap<String, String>) get("BANNED_USERS_CHATS");
         if(bannedUsers.get(get("OPEN_CHAT")) != null) {
-            for (String u : bannedUsers.get(get("OPEN_CHAT")).split(",")) {
+            for (String u : Objects.requireNonNull(bannedUsers.get(get("OPEN_CHAT"))).split(",")) {
                 System.out.println(u);
                 if (u.equals(get("USERNAME"))) {
                     Toast.makeText(this, "You are banned from " + get("OPEN_CHAT") + "!", Toast.LENGTH_SHORT).show();
@@ -63,12 +65,9 @@ public class ChatLoginScreen extends AppCompatActivity {
         ((Button)findViewById(R.id.buttoncreate)).setOnClickListener((v) -> {
             HashMap<String, String> keys = (HashMap<String, String>) get("CHAT_KEYS");
             try {
-                StringBuilder password = new StringBuilder(((EditText) findViewById(R.id.editTextTextPassword)).getText().toString());
-                if(password.length() < 16)
-                    while(password.length() < 16)
-                        password.append('0');
-                if(Crypto.getSHA256(password.toString()).equals(keys.get(get("OPEN_CHAT")))){
-                    addOrSet("CT_CP", password.toString());
+                String password = StringUtil.convertTo16chars(((EditText) findViewById(R.id.editTextTextPassword)).getText().toString());
+                if(Crypto.getSHA256(password).equals(keys.get(get("OPEN_CHAT")))){
+                    addOrSet("CT_CP", password);
                     startActivity(new Intent(ChatLoginScreen.this, ChatScreenSplashScreen.class));
                 }else Toast.makeText(ChatLoginScreen.this, "Incorrect Password!", Toast.LENGTH_SHORT).show();
             } catch (NoSuchAlgorithmException ex) {

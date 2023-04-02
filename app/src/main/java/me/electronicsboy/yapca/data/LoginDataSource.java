@@ -7,6 +7,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import me.electronicsboy.yapca.TempStorage;
 import me.electronicsboy.yapca.data.model.LoggedInUser;
 import me.electronicsboy.yapca.util.Crypto;
+import me.electronicsboy.yapca.util.StringUtil;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -34,12 +35,7 @@ public class LoginDataSource {
     }
 
     public Result<LoggedInUser> register(String username, @NonNull String password) {
-        if(password.length() < 16) {
-            StringBuilder passwordBuilder = new StringBuilder(password);
-            while(passwordBuilder.length() < 16)
-                passwordBuilder.append('0');
-            password = passwordBuilder.toString();
-        }
+        if(password.length() < 16) password = StringUtil.convertTo16chars(password);
         HashMap<String, String> loginData = (HashMap<String, String>) TempStorage.get("LOGIN_DATA");
         if(loginData.get(username) != null)
             return new Result.Error(new LoginException("Username with username \"" + username + "\" already exists!"));

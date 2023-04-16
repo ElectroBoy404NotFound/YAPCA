@@ -4,8 +4,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 
-import me.electronicsboy.yapca.TempStorage;
-
 public class ReportSystem {
     public static void report(String id, HashMap<String, String> mi) {
         System.out.println(mi);

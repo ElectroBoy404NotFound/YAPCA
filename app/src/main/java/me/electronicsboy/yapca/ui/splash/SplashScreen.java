@@ -13,10 +13,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.HashMap;
 
 import me.electronicsboy.yapca.R;
-import me.electronicsboy.yapca.TempStorage;
+import me.electronicsboy.yapca.util.Client;
+import me.electronicsboy.yapca.util.DataListenerInterface;
+import me.electronicsboy.yapca.util.TempStorage;
 import me.electronicsboy.yapca.ui.login.LoginActivity;
 
 public class SplashScreen extends AppCompatActivity {
@@ -27,6 +32,15 @@ public class SplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Users");
+        try {
+            DataListenerInterface DLI = new DataListenerInterface();
+            TempStorage.addOrSet("NCI", new Client(DLI));
+            TempStorage.addOrSet("DLI", DLI);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

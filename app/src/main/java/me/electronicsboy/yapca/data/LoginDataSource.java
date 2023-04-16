@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.google.firebase.database.FirebaseDatabase;
 
-import me.electronicsboy.yapca.TempStorage;
+import me.electronicsboy.yapca.util.TempStorage;
 import me.electronicsboy.yapca.data.model.LoggedInUser;
 import me.electronicsboy.yapca.util.Crypto;
 import me.electronicsboy.yapca.util.StringUtil;

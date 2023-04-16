@@ -1,6 +1,6 @@
 package me.electronicsboy.yapca.ui.chat;
 
-import static me.electronicsboy.yapca.TempStorage.*;
+import static me.electronicsboy.yapca.util.TempStorage.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 

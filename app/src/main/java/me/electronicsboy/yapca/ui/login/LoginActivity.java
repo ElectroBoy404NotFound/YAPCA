@@ -24,7 +24,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import me.electronicsboy.yapca.R;
-import me.electronicsboy.yapca.TempStorage;
+import me.electronicsboy.yapca.util.TempStorage;
 import me.electronicsboy.yapca.databinding.ActivityLoginBinding;
 import me.electronicsboy.yapca.ui.splash.ChatAppSplashScreen;
 

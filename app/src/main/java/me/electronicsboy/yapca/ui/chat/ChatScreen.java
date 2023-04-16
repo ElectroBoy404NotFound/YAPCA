@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import me.electronicsboy.yapca.R;
-import me.electronicsboy.yapca.TempStorage;
+import me.electronicsboy.yapca.util.TempStorage;
 import me.electronicsboy.yapca.data.MessageAdapter;
 import me.electronicsboy.yapca.data.MessageItem;
 import me.electronicsboy.yapca.ui.splash.SplashScreen;

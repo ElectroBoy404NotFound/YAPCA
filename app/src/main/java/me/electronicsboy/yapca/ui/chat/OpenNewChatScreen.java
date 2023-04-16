@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Objects;
 
 import me.electronicsboy.yapca.R;
-import me.electronicsboy.yapca.TempStorage;
+import me.electronicsboy.yapca.util.TempStorage;
 import me.electronicsboy.yapca.ui.splash.ChatAppSplashScreen;
 import me.electronicsboy.yapca.util.Crypto;
 import me.electronicsboy.yapca.util.StringUtil;

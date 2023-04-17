@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.google.firebase.database.FirebaseDatabase;
 
+import me.electronicsboy.yapca.util.Client;
 import me.electronicsboy.yapca.util.TempStorage;
 import me.electronicsboy.yapca.data.model.LoggedInUser;
 import me.electronicsboy.yapca.util.Crypto;
@@ -21,6 +22,13 @@ import javax.security.auth.login.LoginException;
 public class LoginDataSource {
     public Result<LoggedInUser> login(String username, @NonNull String password) {
         try {
+            HashMap<String, String> sendData = new HashMap<>();
+            sendData.put("username", username);
+            sendData.put("password", password);
+            HashMap<String, String> userData = new HashMap<>();
+            userData.put("username", "---");
+            userData.put("password", "---");
+            ((Client)TempStorage.get("NCI")).updateState("LOGIN", sendData, userData);
             HashMap<String, String> loginData = (HashMap<String, String>) TempStorage.get("LOGIN_DATA");
             String actualPassword = loginData.get(username);
             if (actualPassword == null)

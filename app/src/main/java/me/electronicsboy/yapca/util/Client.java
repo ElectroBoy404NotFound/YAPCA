@@ -19,32 +19,35 @@ public class Client {
     private ClientIdentity id;
     private DataListener dl;
 
-    public Client(DataListener dl) throws JSONException, IOException {
-        id = new ClientIdentity();
+    public Client(DataListener dl) {
         this.dl = dl;
-        this.socket = new Socket("127.0.0.1", 8000);
+        try {
+            Client.this.id = new ClientIdentity();
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
 
         new Thread(() -> {
+            try {
+                Client.this.socket = new Socket("192.168.29.50", 8000);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             Scanner ss = null;
             try {
                 ss = new Scanner(new BufferedReader(new InputStreamReader(socket.getInputStream())));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            String finaljson = "";
-            boolean gotData = false;
             while(true) {
                 while(ss.hasNext()) {
-                    gotData = true;
-                    finaljson += ss.next();
-                }
-                if(gotData) {
                     try {
-                        dl.gotData(new JSONObject(finaljson));
+                        String line = ss.nextLine();
+                        System.out.println("I got: " + line);
+                        dl.gotData(new JSONObject(line));
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
-                    gotData = false;
                 }
             }
         }).start();
@@ -56,14 +59,17 @@ public class Client {
     }
 
     private void sendData(String state) throws IOException {
-        if(socket != null) {
+        new Thread(() -> {
+            while(socket == null);
             PrintWriter printWriter = null;
-            printWriter = new PrintWriter(socket.getOutputStream());
-            if(socket.isConnected()) {
+            try {
+                printWriter = new PrintWriter(socket.getOutputStream());
                 printWriter.println(state);
                 printWriter.flush();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-        }
+        }).start();
     }
     public interface DataListener {
         void gotData(JSONObject data);
@@ -110,9 +116,16 @@ public class Client {
                     throw new RuntimeException(e);
                 }
             });
+            JSONObject userObject = new JSONObject();
+            userdata.forEach((key, value) -> {
+                try {
+                    userObject.put(key, value);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            });
             this.data.put("data", dataObject);
-            this.data.put("userdata", userdata);
-            System.out.println(this.data.toString());
+            this.data.put("userdata", userObject);
         }
         public String getState() {
             return this.data.toString();

@@ -32,10 +32,20 @@ public class SplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Users");
+        Client c;
         try {
             DataListenerInterface DLI = new DataListenerInterface();
-            TempStorage.addOrSet("NCI", new Client(DLI));
+            c = new Client(DLI);
+            TempStorage.addOrSet("NCI", c);
             TempStorage.addOrSet("DLI", DLI);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        HashMap<String, String> udata = new HashMap<>(), data = new HashMap<>();
+        udata.put("username", "---");
+        udata.put("password", "---");
+        try {
+            c.updateState("CONNECT", data, udata);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {

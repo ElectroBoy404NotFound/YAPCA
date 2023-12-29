@@ -30,8 +30,8 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Users");
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("Users");
         Client c;
         try {
             DataListenerInterface DLI = new DataListenerInterface();
@@ -51,26 +51,28 @@ public class SplashScreen extends AppCompatActivity {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                HashMap<String, String> logins = new HashMap<>();
-                for(DataSnapshot snap : dataSnapshot.getChildren())
-                    logins.put(snap.getKey(), (String) snap.getValue());
-                TempStorage.addOrSet("LOGIN_DATA", logins);
-                myRef.removeEventListener(this);
-                startActivity(new Intent(SplashScreen.this, LoginActivity.class));
-                finish();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Failed to read value
-//                Toast.makeText(LoginActivity.this, "ERROR!\n" + error.toException().getMessage(), Toast.LENGTH_LONG).show();
-                Log.w(null,"Failed to read value.", error.toException());
-//                ((TextView) findViewById(R.ids.status)).setText("Oh no! Connect to the internet and restart the app to continue!");
-            }
-        });
+        startActivity(new Intent(SplashScreen.this, LoginActivity.class));
+        finish();
+//        myRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                HashMap<String, String> logins = new HashMap<>();
+//                for(DataSnapshot snap : dataSnapshot.getChildren())
+//                    logins.put(snap.getKey(), (String) snap.getValue());
+//                TempStorage.addOrSet("LOGIN_DATA", logins);
+//                myRef.removeEventListener(this);
+//                startActivity(new Intent(SplashScreen.this, LoginActivity.class));
+//                finish();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                // Failed to read value
+////                Toast.makeText(LoginActivity.this, "ERROR!\n" + error.toException().getMessage(), Toast.LENGTH_LONG).show();
+//                Log.w(null,"Failed to read value.", error.toException());
+////                ((TextView) findViewById(R.ids.status)).setText("Oh no! Connect to the internet and restart the app to continue!");
+//            }
+//        });
     }
 
 }

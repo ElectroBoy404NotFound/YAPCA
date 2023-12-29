@@ -19,6 +19,8 @@ public class Client {
     private ClientIdentity id;
     private DataListener dl;
 
+    private static final String IP = "192.168.29.106";
+
     public Client(DataListener dl) {
         this.dl = dl;
         try {
@@ -29,34 +31,34 @@ public class Client {
 
         new Thread(() -> {
             try {
-                Client.this.socket = new Socket("192.168.1.33", 8000);
+                Client.this.socket = new Socket(IP, 8000);
                 System.out.println("Connected");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            Scanner ss = null;
+            BufferedReader bf;
             try {
-                ss = new Scanner(new BufferedReader(new InputStreamReader(socket.getInputStream())));
+                bf = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            while(true) {
-                while(ss.hasNext()) {
-                    System.out.println("I got something");
-                    try {
-                        String line = "";
-                        System.out.println("I got something");
-                        System.out.println(ss.hasNext());
-                        while(ss.hasNext()) {System.out.println(ss.hasNext()); System.out.println("formed: " + line); line += ss.next();}
-                        System.out.println("I got something");
-                        System.out.println("I got: " + line);
-                        dl.gotData(new JSONObject(line));
-                    } catch (Exception e) {
-                        System.out.println("I crash");
-                        e.printStackTrace();
-                        throw new RuntimeException(e);
+            try {
+                while(true) {
+                    String line;
+                    while ((line = bf.readLine()) != null) {
+                        try {
+                            System.out.println("I got: " + line);
+                            dl.gotData(new JSONObject(line));
+                        } catch (Exception e) {
+                            System.out.println("I crash");
+                            e.printStackTrace();
+                            throw new RuntimeException(e);
+                        }
                     }
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }).start();
     }
@@ -67,20 +69,13 @@ public class Client {
     }
 
     private void sendData(String state) throws IOException {
-        System.out.println("SEND");
         new Thread(() -> {
-            System.out.println("SEND");
             while(socket == null);
-            System.out.println("SEND");
             PrintWriter printWriter = null;
             try {
-                System.out.println("SEND");
                 printWriter = new PrintWriter(socket.getOutputStream());
-                System.out.println("SEND");
                 printWriter.println(state);
-                System.out.println("SEND");
                 printWriter.flush();
-                System.out.println("SEND");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

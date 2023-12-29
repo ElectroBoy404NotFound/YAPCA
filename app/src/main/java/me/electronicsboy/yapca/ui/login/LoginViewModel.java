@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
 import me.electronicsboy.yapca.data.LoginRepository;
@@ -71,7 +74,7 @@ public class LoginViewModel extends ViewModel {
         return password != null && password.trim().length() <= 16 && password.trim().length() >= 5;
     }
 
-    public void register(String username, String password) throws NoSuchAlgorithmException {
+    public void register(String username, String password) throws NoSuchAlgorithmException, JSONException, IOException {
         password = StringUtil.convertTo16chars(password);
         Result<LoggedInUser> result = loginRepository.register(username, password);
 

@@ -16,6 +16,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import org.json.JSONException;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -130,6 +132,10 @@ public class LoginActivity extends AppCompatActivity {
                 loginViewModel.register(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });

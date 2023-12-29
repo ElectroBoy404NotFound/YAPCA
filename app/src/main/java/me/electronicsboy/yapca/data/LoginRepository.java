@@ -1,5 +1,10 @@
 package me.electronicsboy.yapca.data;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+
 import me.electronicsboy.yapca.data.model.LoggedInUser;
 
 /**
@@ -51,7 +56,7 @@ public class LoginRepository {
         return result;
     }
 
-    public Result<LoggedInUser> register(String username, String password) {
+    public Result<LoggedInUser> register(String username, String password) throws JSONException, IOException, NoSuchAlgorithmException {
         Result<LoggedInUser> result = dataSource.register(username, password);
         if (result instanceof Result.Success) {
             setLoggedInUser(((Result.Success<LoggedInUser>) result).getData());

@@ -13,17 +13,27 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+import javax.security.auth.login.LoginException;
+
 import me.electronicsboy.yapca.R;
+import me.electronicsboy.yapca.data.LoginDataSource;
+import me.electronicsboy.yapca.util.Client;
+import me.electronicsboy.yapca.util.DataListenerInterface;
 import me.electronicsboy.yapca.util.TempStorage;
 import me.electronicsboy.yapca.ui.chat.ChatSelectScreen;
 import me.electronicsboy.yapca.util.Crypto;
 
 public class ChatAppSplashScreen extends AppCompatActivity {
+    private boolean dataRecievedChats = false;
+    private String dataChats = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,5 +104,39 @@ public class ChatAppSplashScreen extends AppCompatActivity {
 ////                ((TextView) findViewById(R.id.status)).setText("Oh no! Connect to the internet and restart the app to continue!");
 //            }
 //        });
+
+        ((DataListenerInterface) TempStorage.get("DLI")).setL(new Client.DataListener() {
+            @Override
+            public void gotData(JSONObject data) {
+                ChatAppSplashScreen.this.dataChats = data.toString();
+                dataRecievedChats = true;
+            }
+        });
+        try {
+            HashMap<String, String> sendData = new HashMap<>();
+            sendData.put("username", (String) TempStorage.get("USERNAME"));
+            sendData.put("password", (String) TempStorage.get("USERNAME"));
+            HashMap<String, String> userData = new HashMap<>();
+            userData.put("username", (String) TempStorage.get("USERNAME"));
+            userData.put("password", (String) TempStorage.get("USERNAME"));
+            ((Client) TempStorage.get("NCI")).updateState("GETROOMS", sendData, userData);
+
+            while(!dataRecievedChats);
+            dataRecievedChats = false;
+
+            JSONObject obj = new JSONObject(dataChats);
+            if(!obj.getString("state").equals("GETROOMS_SUCCESS")) throw new Exception("Get rooms failed!");
+
+            JSONArray arr = obj.getJSONArray("data");
+            List<String> chats = new ArrayList<>();
+            for(int i = 0; i < arr.length(); i++)
+                chats.add(Crypto.decrypt(arr.getString(i), (String) TempStorage.get("SHA256PWD")));
+            TempStorage.addOrSet("CHATS_DATA", chats);
+
+            startActivity(new Intent(ChatAppSplashScreen.this, ChatSelectScreen.class));
+            finish();
+        } catch(Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

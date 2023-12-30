@@ -29,27 +29,6 @@ public class OpenNewChatScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_new_chat_screen);
-        ((EditText) findViewById(R.id.password)).addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // Do nothing
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Do nothing
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                EditText password = (EditText)findViewById(R.id.password);
-                if(password.getText().toString().length() < 5 || password.getText().toString().length() > 16) {
-                    password.setError(getString(R.string.invalid_password));
-                    ((Button)findViewById(R.id.buttonopen)).setEnabled(false);
-                }else
-                    ((Button)findViewById(R.id.buttonopen)).setEnabled(true);
-            }
-        });
         ((EditText)findViewById(R.id.username)).addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -82,32 +61,13 @@ public class OpenNewChatScreen extends AppCompatActivity {
             }
         });
         ((Button) findViewById(R.id.buttonopen)).setOnClickListener((v) -> {
-            if(((HashMap<String, String>) TempStorage.get("CHAT_KEYS")).get(((EditText)findViewById(R.id.username)).getText().toString()) == null)
-                Toast.makeText(OpenNewChatScreen.this, "Room does not exists!", Toast.LENGTH_SHORT).show();
-            else {
-                String password = StringUtil.convertTo16chars(((EditText) findViewById(R.id.password)).getText().toString());
-                HashMap<String, String> chatKeys = ((HashMap<String, String>) TempStorage.get("CHAT_KEYS"));
-                try {
-                    if(Objects.requireNonNull(chatKeys.get(((EditText) findViewById(R.id.username)).getText().toString())).equals(Crypto.getSHA256(password))) {
-                        List<String> chats = (List<String>) TempStorage.get("CHATS_DATA");
-                        chats.add(((EditText)findViewById(R.id.username)).getText().toString());
-                        StringBuilder finalData = new StringBuilder();
-                        for(int i = 0; i < chats.size(); i++) {
-                            finalData.append(Objects.requireNonNull(Crypto.encrypt(chats.get(i), (String) TempStorage.get("PASSWORD_CLEARTXT"))).replace("\n", ""));
-                            if(i < chats.size()-1) finalData.append(',');
-                        }
-                        System.out.println(finalData);
-                        FirebaseDatabase.getInstance().getReference("Chats/" + TempStorage.get("USERNAME")).setValue(finalData.toString());
-                        startActivity(new Intent(OpenNewChatScreen.this, ChatAppSplashScreen.class));
-                    }else
-                        Toast.makeText(OpenNewChatScreen.this, "Incorrect password for room!", Toast.LENGTH_SHORT).show();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-            }
+            TempStorage.addOrSet("OPEN_CHAT", ((EditText) findViewById(R.id.username)).getText().toString());
+            startActivity(new Intent(OpenNewChatScreen.this, ChatLoginScreen.class));
+            finish();
         });
-        ((Button)findViewById(R.id.buttonback)).setOnClickListener((v) ->
-                startActivity(new Intent(OpenNewChatScreen.this, ChatAppSplashScreen.class))
-        );
+        ((Button)findViewById(R.id.buttonback)).setOnClickListener((v) -> {
+            startActivity(new Intent(OpenNewChatScreen.this, ChatAppSplashScreen.class));
+            finish();
+        });
     }
 }

@@ -19,7 +19,8 @@ public class Client {
     private ClientIdentity id;
     private DataListener dl;
 
-    private static final String IP = "192.168.29.106";
+    private static final String IP = "147.185.221.17";
+    private static final int PORT = 55310;
 
     public Client(DataListener dl) {
         this.dl = dl;
@@ -31,7 +32,7 @@ public class Client {
 
         new Thread(() -> {
             try {
-                Client.this.socket = new Socket(IP, 8000);
+                Client.this.socket = new Socket(IP, PORT);
                 System.out.println("Connected");
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -47,7 +48,6 @@ public class Client {
                     String line;
                     while ((line = bf.readLine()) != null) {
                         try {
-                            System.out.println("I got: " + line);
                             dl.gotData(new JSONObject(line));
                         } catch (Exception e) {
                             System.out.println("I crash");
